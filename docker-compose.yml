@@ -1,6 +1,7 @@
 version: '3.1'
 
 services:
+
     frontend:
       image: frontend-image
       restart: unless-stopped
@@ -20,6 +21,7 @@ services:
         PORT: 3000
       volumes:
         - shop:/app/share/db
+
     db:
       image: mysql:8.0
       restart: unless-stopped
@@ -32,6 +34,17 @@ services:
         - 3306:3306
       volumes:
         - db:/app/share/db
+
+    db-reset:
+      image: db-reset
+      restart: on-failure
+      environment:
+        DB_USERNAME: admin
+        DB_PASSWORD: admin
+        DB_DATABASE: zay
+        DB_HOSTNAME: db
+      depends_on:
+        - db
 
 volumes:
   shop:
