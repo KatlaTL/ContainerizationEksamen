@@ -1,0 +1,38 @@
+version: '3.1'
+
+services:
+    frontend:
+      image: frontend-image
+      restart: unless-stopped
+      ports:
+        - 8080:8080
+
+    backend:
+      image: backend-image
+      restart: unless-stopped
+      ports:
+        - 3000:3000
+      environment:
+        DB_USERNAME: admin
+        DB_PASSWORD: admin
+        DB_DATABASE: zay
+        DB_HOSTNAME: db
+        PORT: 3000
+      volumes:
+        - shop:/app/share/db
+    db:
+      image: mysql:8.0
+      restart: unless-stopped
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: zay
+        MYSQL_USER: admin
+        MYSQL_PASSWORD: admin
+      ports:
+        - 3306:3306
+      volumes:
+        - db:/app/share/db
+
+volumes:
+  shop:
+  db:
