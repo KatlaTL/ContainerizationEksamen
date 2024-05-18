@@ -20,7 +20,7 @@ services:
         DB_HOSTNAME: db
         PORT: 3000
       volumes:
-        - shop:/app/share/db
+        - shop:/app/share/backend
 
     db:
       image: mysql:8.0
