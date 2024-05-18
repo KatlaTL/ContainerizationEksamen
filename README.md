@@ -1,15 +1,4 @@
 <a name="readme-top"></a>
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-
-[![Forks][forks-shield]][forks-url]
-
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -25,14 +14,14 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#Containerize the application">Containerize the application</a>
+    <li><a href="#Containerize-the-application">Containerize the application</a>
         <ul>
-        <li><a href="#Docker Image of the Frontend">Docker Image of the Frontend</a></li>
-        <li><a href="#Docker Images of the Backend">Docker Images of the Backend</a></li>
+        <li><a href="#Docker-Image-of-the-Frontend">Docker Image of the Frontend</a></li>
+        <li><a href="#Docker-Images-of-the-Backend">Docker Images of the Backend</a></li>
         <li><a href="#Docker-compose">Docker-compose</a></li>
         </ul>
     </li>
-    <li><a href="#Docker Swarm">Docker Swarm</a></li>
+    <li><a href="#Docker-Swarm">Docker Swarm</a></li>
   </ol>
 </details>
 
@@ -303,15 +292,9 @@ When we have builded all three of the images, then it's time to create a docker-
     The container can now be access on localhost:8080 <br />
     Check that the server and database are running by visitting `/shop`
 
-
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Docker Swarm
 TO-DO
 
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[forks-shield]: https://img.shields.io/github/forks/katlaTL/repo_name.svg?style=for-the-badge
-[forks-url]: https://github.com/ucldk/zay-ecommerce
-
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
