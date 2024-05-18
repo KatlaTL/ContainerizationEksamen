@@ -1,18 +1,20 @@
 <a name="readme-top"></a>
 
+# Containerization Eksamen
+
+
 <!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
+<summary>Table of Contents</summary>
+<ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
+        <a href="#about-the-project">About The Project</a>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
+        <a href="#getting-started">Getting Started</a>
+        <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
-      </ul>
+        </ul>
     </li>
     <li><a href="#Containerize-the-application">Containerize the application</a>
         <ul>
@@ -22,16 +24,15 @@
         </ul>
     </li>
     <li><a href="#Docker-Swarm">Docker Swarm</a></li>
-  </ol>
-</details>
+</ol>
 
 
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-There are a separate README.md file in both the frontend and backend project for how to run the projects on localhost.
-In this README.md we will explain how to containerize the project as a whole with docker and how to use Docker Swarm to orchestration.
+There are a separate README.md files in both the frontend and backend project for how to run the projects on localhost.
+In this README.md we will explain how to containerize the project as a whole with docker and how to use Docker Swarm for orchestration.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
