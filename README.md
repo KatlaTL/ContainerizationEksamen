@@ -178,7 +178,7 @@ Starting in the root of the project
         ```
         The container can now be access on localhost:3000 <br />
         Check that the server is running by visitting `/status`
-7. We will then create a second Docker image for the backend which only purpose is to spin up and do a `npm run db:reset` to populate the database with data
+7. It's now time to create a second Docker image for the backend which only purpose is to spin up and do a `npm run db:reset` to populate the database with data
     ```sh
     touch Dockerfile.db-reset
     ```
@@ -202,7 +202,7 @@ Starting in the root of the project
     ```
     The commands are almost identical with the previous image <br />
     The difference being that we are not exposing any ports as we do not need to access the container and we run a `npm run db:reset` when we run the image
-10. Build the Docker image with db-reset
+10. Build the Docker image with the name db-reset
     ```sh
     docker build -t db-reset -f Dockerfile.db-reset .
     ```
