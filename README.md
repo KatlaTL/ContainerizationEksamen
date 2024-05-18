@@ -4,8 +4,8 @@
 
 
 <!-- TABLE OF CONTENTS -->
-<summary>Table of Contents</summary>
-<ul>
+<h4>Table of Contents</h4>
+<ol>
     <li>
         <a href="#about-the-project">About The Project</a>
     </li>
@@ -24,7 +24,7 @@
         </ul>
     </li>
     <li><a href="#Docker-Swarm">Docker Swarm</a></li>
-</ul>
+</ol>
 
 
 
