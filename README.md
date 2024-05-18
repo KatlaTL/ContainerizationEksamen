@@ -51,7 +51,7 @@ Make sure you have Docker install before continuing with this guide
 
 ### Installation
 
-To containerize the application you first of all have to either download or clone project
+To containerize the application you first have to either download or clone the project
 1. Clone the repository
    ```sh
    git clone https://github.com/KatlaTL/ContainerizationEksamen.git 
