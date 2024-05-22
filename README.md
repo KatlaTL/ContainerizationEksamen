@@ -345,7 +345,7 @@ First ssh into the manager node
 
 First we need to update docker compose to include replicas
 
-1. In the docker-compose.yml update the following lines
+1. In the docker-compose.yml update it so it has a deploy section
     ```sh
     version: '3.1'
 
