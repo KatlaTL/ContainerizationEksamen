@@ -24,6 +24,7 @@
         </ul>
     </li>
     <li><a href="#Docker-Swarm">Docker Swarm</a></li>
+    <li><a href="#Docker-Stack">Docker Stack</a></li>
 </ol>
 
 
@@ -296,6 +297,129 @@ When we have builded all three of the images, then it's time to create a docker-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Docker Swarm
-TO-DO
+
+We have 3 laptops with ubuntu 22.04 installed, they are used as nodes in our swarm cluster. 
+
+First we will ssh into one of the machines, and run docker swarm on it. 
+
+
+1. Ssh into a node
+    ```sh
+    ssh laptop-username@ip-adress
+    ```
+2. Install docker on the node
+    ```sh
+    sudo apt install docker.io
+    ```
+3. Init docker swarm on the node
+    ```sh
+    sudo docker swarm init
+    ```
+
+Now this node have become a manager, and you should see the docker swarm join token. Remember to save it.
+
+Now repeat step 1 and 2 for the other nodes.
+
+
+4. Add the other nodes to the swarm cluster
+    ```sh
+    sudo docker swarm join --token [ join-token ip:port ] 
+    ```
+
+Now we have to promote the other workers to managers, so they're reachable in case of any failure in the swarm cluster
+
+First ssh into the manager node
+
+5. Get the list of swarm nodes
+    ```sh
+    sudo docker node ls
+    ```
+6. Promote the worker node to manager
+    ```sh
+    sudo docker node promote [ node-name... ]
+    ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Docker Stack 
+
+First we need to update docker compose to include replicas
+
+1. In the docker-compose.yml update the following lines
+    ```sh
+    version: '3.1'
+
+    services:
+
+        frontend:
+            image: frontend-image
+            restart: unless-stopped
+            ports:
+                - 8080:8080
+            deploy:
+                mode: replicated
+                replicas: 3
+
+        backend:
+            image: backend-image
+            restart: unless-stopped
+            ports:
+                - 3000:3000
+            deploy:
+                mode: replicated
+                replicas: 3
+            environment:
+                DB_USERNAME: admin
+                DB_PASSWORD: admin
+                DB_DATABASE: zay
+                DB_HOSTNAME: db
+                PORT: 3000
+            volumes:
+                - shop:/app/share/backend
+
+        db:
+            image: mysql:8.0
+            restart: unless-stopped
+            environment:
+                MYSQL_ROOT_PASSWORD: root
+                MYSQL_DATABASE: zay
+                MYSQL_USER: admin
+                MYSQL_PASSWORD: admin
+            ports:
+                - 3306:3306
+            deploy:
+                mode: replicated
+                replicas: 3
+            volumes:
+                - db:/app/share/db
+
+        db-reset:
+            image: db-reset
+            restart: on-failure
+            environment:
+                DB_USERNAME: admin
+                DB_PASSWORD: admin
+                DB_DATABASE: zay
+                DB_HOSTNAME: db
+            depends_on:
+                - db
+
+        volumes:
+            shop:
+            db:
+
+    ```
+
+Clone project to one of the workers and build the docker files into images
+
+2. Deploy the stack to the swarm
+    ```sh
+    sudo docker stack deploy --compose-file docker-compose.yml [ stackname ]
+    ```
+3. Check that services is running
+    ```sh
+    sudo docker service ls
+    ```
+Now you can acces the nodes in the browser on each of the nodes ip adresses on port 8080
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
