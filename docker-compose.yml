@@ -7,12 +7,18 @@ services:
       restart: unless-stopped
       ports:
         - 8080:8080
+      deploy:
+        mode: replicated
+        replicas: 3
 
     backend:
       image: backend-image
       restart: unless-stopped
       ports:
         - 3000:3000
+      deploy:
+        mode: replicated
+        replicas: 3
       environment:
         DB_USERNAME: admin
         DB_PASSWORD: admin
@@ -32,6 +38,9 @@ services:
         MYSQL_PASSWORD: admin
       ports:
         - 3306:3306
+      deploy:
+        mode: replicated
+        replicas: 3
       volumes:
         - db:/app/share/db
 
