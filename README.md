@@ -343,7 +343,7 @@ First ssh into the manager node
 
 ## Docker Stack 
 
-First we need to update docker compose to include replicas
+First we need to update docker compose to include replicas. We will add 3 replicas to each of the services: frontend, backend and mysql. This ensures that each of the nodes are running the same content.
 
 1. In the docker-compose.yml update it so it has a deploy section
     ```sh
@@ -420,6 +420,6 @@ Clone project to one of the workers and build the docker files into images
     ```sh
     sudo docker service ls
     ```
-Now you can acces the nodes in the browser on each of the nodes ip adresses on port 8080
+Now you can access the nodes in the browser on each of the nodes ip adresses on port 8080
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
