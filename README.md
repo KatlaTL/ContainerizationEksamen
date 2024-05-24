@@ -13,6 +13,9 @@
         <a href="#getting-started">Getting Started</a>
         <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
+            <li><a href="#connect-to-wifi">Connect to wifi</a></li>
+            <li><a href="#install-docker">Install Docker</a></li>
+            <li><a href="#change-hostname-and-host">Change hostname and host</a></li>
         <li><a href="#installation">Installation</a></li>
         </ul>
     </li>
@@ -49,6 +52,69 @@ To get a local copy up and running follow these simple example steps.
 
 Make sure you have Docker install before continuing with this guide
 [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
+
+## Connect to wifi
+
+The nodes has Ubuntu:22.04 installed therefore we need to use Linux commands.
+
+The first thing to do is to connect to the wifi
+
+1. First identify the name of the wireless network interface
+    ```sh
+    ls /sys/class/net
+    ```
+2. Navigate to the netplan directory and find the configuration file
+    ```sh
+    ls /etc/netplan/
+    ```
+3. Edit the netplan config
+    ```sh
+    sudo nano /etc/netplan/00-installer-config-wifi.yaml
+    ```
+4. Add the following
+    ```sh
+    network:
+    ethernets:
+        eth0:
+            dhcp4: true
+            optional: true
+    version: 2
+    wifis:
+        wlp3s0:
+            optional: true
+            access-points:
+                "SSID-NAME-HERE":
+                    password: "PASSWORD-HERE"
+            dhcp4: true
+    ```
+    5. Apply your changes to your wireless interface and connect to wifi
+    ```sh
+    sudo netplan apply
+    ```
+    6. Check if you can see the nodes ip
+    ```sh
+    ip a
+    ```
+
+## Install Docker
+
+1. Use following command
+    ```sh
+    sudo apt install docker.io
+    ```
+## Change hostname and host
+
+All laptops had the name "user" which made it hard to differeniate them. To change this do the following:
+
+1. Locate the files hostname and hosts
+    ```sh
+    cd /etc
+    ```
+2. Edit the file
+    ```sh
+    sudo nano [ either hostname or hosts]
+    ```
+
 
 ### Installation
 
@@ -423,3 +489,4 @@ Clone project to one of the workers and build the docker files into images
 Now you can access the nodes in the browser on each of the nodes ip adresses on port 8080
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
