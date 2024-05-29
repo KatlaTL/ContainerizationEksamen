@@ -1,5 +1,3 @@
-version: '3.1'
-
 services:
 
     frontend:
@@ -7,24 +5,23 @@ services:
       restart: unless-stopped
       ports:
         - 8080:8080
-      deploy:
-        mode: replicated
-        replicas: 3
 
     backend:
       image: backend-image
       restart: unless-stopped
       ports:
         - 3000:3000
-      deploy:
-        mode: replicated
-        replicas: 3
       environment:
         DB_USERNAME: admin
         DB_PASSWORD: admin
         DB_DATABASE: zay
         DB_HOSTNAME: db
         PORT: 3000
+      depends_on:
+        db:
+          condition: service_healthy
+        db-reset:
+          condition: service_completed_successfully
       volumes:
         - shop:/app/share/backend
 
@@ -38,9 +35,12 @@ services:
         MYSQL_PASSWORD: admin
       ports:
         - 3306:3306
-      deploy:
-        mode: replicated
-        replicas: 3
+      healthcheck:
+        test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+        start_period: 10s
+        interval: 5s
+        timeout: 10s
+        retries: 50
       volumes:
         - db:/app/share/db
 
@@ -53,7 +53,8 @@ services:
         DB_DATABASE: zay
         DB_HOSTNAME: db
       depends_on:
-        - db
+        db:
+          condition: service_healthy
 
 volumes:
   shop:

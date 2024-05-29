@@ -1,0 +1,84 @@
+services:
+
+    frontend:
+      image: frontend-image
+      restart: unless-stopped
+      ports:
+        - 8080:8080
+      
+    backend:
+      image: backend-image
+      restart: unless-stopped
+      ports:
+        - 3000:3000
+    
+      environment:
+        DB_USERNAME: admin
+        DB_PASSWORD: admin
+        DB_DATABASE: zay
+        DB_HOSTNAME: db
+        PORT: 3000
+      depends_on:
+        db:
+          condition: service_healthy
+        db-reset:
+          condition: service_completed_successfully
+
+      volumes:
+        - type: volume
+          source: shop
+          target: /nfs
+          volume:
+            nocopy: true
+
+    db:
+      image: mysql:8.0
+      restart: unless-stopped
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: zay
+        MYSQL_USER: admin
+        MYSQL_PASSWORD: admin
+      ports:
+        - 3306:3306
+      healthcheck:
+        test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+        start_period: 10s
+        interval: 5s
+        timeout: 10s
+        retries: 50
+
+      volumes:
+        - type: volume
+          source: db
+          target: /nfs
+          volume:
+            nocopy: true
+
+    db-reset:
+      image: db-reset
+      restart: on-failure
+      environment:
+        DB_USERNAME: admin
+        DB_PASSWORD: admin
+        DB_DATABASE: zay
+        DB_HOSTNAME: db
+      depends_on:
+        depends_on:
+          db:
+            condition: service_healthy
+
+
+volumes:
+  shop:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.8.40,nolock,soft,rw
+      device: ":/share/zay/nfsdir"
+  db:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.8.40,nolock,soft,rw
+      device: ":/share/zay/nfsdir"
