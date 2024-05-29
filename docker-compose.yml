@@ -46,7 +46,7 @@ services:
 
     db-reset:
       image: db-reset
-      restart: on-failure
+      restart: on-failure:3
       environment:
         DB_USERNAME: admin
         DB_PASSWORD: admin
